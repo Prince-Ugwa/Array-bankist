@@ -244,9 +244,8 @@ displayBalance(account1.movements);
 /////////////////////////////////////////////////////////////////////////////
 //compute username map and forEach
 const createUsername = function (accs) {
-  //modifying an array that we already get as an input
+  //creating username inside of an existing object
   accs.forEach(function (acc) {
-    // the forEach method helps us create a side effect
     acc.username = acc.owner
       .toLowerCase()
       .split(' ')
@@ -256,6 +255,17 @@ const createUsername = function (accs) {
 };
 createUsername(accounts);
 console.log(accounts);
+
+///////////event handler//////////////////////////////////////////////////
+let currentAccount;
+btnLogin.addEventListener('click', function (e) {
+  e.preventDefault();
+  currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value
+  );
+
+  console.log(currentAccount);
+});
 ////////////////////////////////sum of all deposits
 const displaySmmary = movements => {
   const income = movements
@@ -423,8 +433,8 @@ const totalDeposit = movements
   //   console.log(arr);
   //   return mov * euroToUsd;
   // })
-  // .map(mov => mov * euroToUsd)
-  .reduce((acc, mov) => acc - mov, 0);
+  .map(mov => mov * euroToUsd)
+  .reduce((acc, mov) => acc + mov, 0);
 
 console.log(totalDeposit);
 
@@ -441,16 +451,3 @@ for (const acc of accounts)
   if (acc.owner === 'Jessica Davis') acctOwner.push(acc);
 // console.log(acctOwner);
 ///compute a username for a single object
-const oneObj = {
-  owner: 'Brawny Odiniya Prince',
-  age: 24,
-};
-const cr = function (asc) {
-  asc.username = asc.owner
-    .split(' ')
-    .map(name => name[0])
-    .join('')
-    .toLowerCase();
-};
-cr(oneObj);
-console.log(oneObj);
