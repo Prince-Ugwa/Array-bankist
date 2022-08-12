@@ -255,17 +255,7 @@ const createUsername = function (accs) {
 };
 createUsername(accounts);
 console.log(accounts);
-
-///////////event handler//////////////////////////////////////////////////
-let currentAccount;
-btnLogin.addEventListener('click', function (e) {
-  e.preventDefault();
-  currentAccount = accounts.find(
-    acc => acc.username === inputLoginUsername.value
-  );
-
-  console.log(currentAccount);
-});
+/////////////////////////////////////////////
 ////////////////////////////////sum of all deposits
 const displaySmmary = movements => {
   const income = movements
@@ -291,6 +281,32 @@ const displaySmmary = movements => {
 displaySmmary(account1.movements);
 ///////////////////////////////////////////////////
 
+///////IMPLEMENTING LOG IN////event handler//////////////////////////////////////////////////
+let currentAccount;
+btnLogin.addEventListener('click', function (e) {
+  e.preventDefault();
+  currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value
+  );
+
+  console.log(currentAccount);
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    labelWelcome.textContent = `Welcome Back ${
+      currentAccount.owner.split(' ')[0]
+    }`;
+    containerApp.style.opacity = 100;
+    //display movements
+    showMovement(currentAccount.movements);
+    //display balance
+    displayBalance(currentAccount.movements);
+    //display smmary
+    displaySmmary(currentAccount);
+    //clear input
+    inputLoginUsername.value = inputLoginPin.value = '';
+    inputLoginPin.blur();
+  }
+});
+
 /////////////////////////////
 ///Map method to create userName
 // const username = user
@@ -315,7 +331,7 @@ const username = user
   })
   .join('');
 
-console.log(username);
+// console.log(username);
 
 ///////////////////////////////////////////////////////////////////////////
 //The map()method: it maps array elemnt into a new array
@@ -451,3 +467,66 @@ for (const acc of accounts)
   if (acc.owner === 'Jessica Davis') acctOwner.push(acc);
 // console.log(acctOwner);
 ///compute a username for a single object
+
+//the some() method: will return true if one of the element of an pass a test codition
+const somes = [10, 20, 30, -40, 500];
+
+console.log(somes.some(mov => mov < 50));
+
+// every (): return true if all the elements pass the test.
+console.log(somes.every(mov => mov < 50));
+
+//flat(): create new array with all sub arrays into one big array.
+// by default the depth is 1
+// depth 1 example
+const arr = [[1, 2, 3, 20, 50], [24, 87, 61], 9, 8];
+console.log(arr.flat());
+console.log(arr.flat()[7]);
+
+// depth 2 example
+const arrDeep = [[[1, 2, 3], 20, 50], [24, [87, 61]], 9, 8];
+console.log(arrDeep.flat(2));
+
+//exercise: calc all movements balance from all accounts
+// const accountsMovements = accounts.map(acc => acc.movements);
+// const flatAcc = accountsMovements.flat();
+// const reduceAcc = flatAcc.reduce((accu, mov) => accu + mov, 0);
+// console.log(reduceAcc);
+
+//flat with chaining
+const accountsMovements = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((accu, mov) => accu + mov, 0);
+// console.log(flatAcc);
+console.log(accountsMovements);
+
+//flatMap: first map each element in an array using mapping function and then flatten them into a new array
+const accountsMovements2 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((accu, mov) => accu + mov, 0);
+// console.log(flatAcc);
+console.log(accountsMovements2);
+
+//sorting
+const fruits = ['Banana', 'Orange', 'Apple', 'Mango'];
+fruits.sort();
+fruits.reverse();
+console.log(fruits);
+///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+////////////////////more ways to create and filling arrays///////////////////////
+
+const arrr = [1, 2, 3, 4, 5, 6, 7];
+console.log([1, 2, 3, 4, 5, 6, 7]);
+const x = new Array(7);
+
+//empty array with the fill()
+x.fill(1);
+//The fill method is use to fill specified element in an array with values..
+//the fill mehtod overwrite thne original array..
+console.log(x);
+arrr.fill(23, 2, 6);
+console.log(arrr);
+
+//Array.from()
