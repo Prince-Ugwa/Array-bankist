@@ -538,12 +538,39 @@ console.log(y);
 //01: FILTERING ALL THE MOVEMENTS FROM THE 4 ACCOUNTS
 const bankDepsitSm = accounts
   .flatMap(acc => acc.movements)
-  .filter(mov => mov < 0)
+  .filter(mov => mov > 0)
   .reduce((accu, mov) => accu + mov, 0);
 console.log(bankDepsitSm);
 
 //02: getting the lenght of an array
 const depositNum100 = accounts
   .flatMap(acc => acc.movements)
-  .reduce((count, cur) => (cur >= 1000 ? count + 1 : count, 0));
+  // .reduce((count, cur) => (cur >= 1000 ? count + 1 : count), 0);
+  .reduce((count, cur) => (cur >= 1000 ? ++count : count), 0); // prefix for ++
+
+console.log(accounts.flatMap(acc => acc.movements).filter(mov => mov >= 1000));
 console.log(depositNum100);
+
+//03: create new object instead ofnmber or strings
+
+// const sum = accounts
+//   .flatMap(acc => acc.movements)
+//   .reduce(
+//     (sum, mov) => {
+//       mov > 0 ? (sum.deposit += mov) : (sum.withdrawal += mov);
+//       return sum;
+//     },
+//     { deposit: 0, withdrawal: 0 }
+//   );
+const { deposit, withdrawal } = accounts
+  .flatMap(acc => acc.movements)
+  .reduce(
+    (sum, mov) => {
+      // mov > 0 ? (sum.deposit += mov) : (sum.withdrawal += mov);
+      sum[mov > 0 ? 'deposit' : 'withdrawal'] += mov;
+      return sum;
+    },
+    { deposit: 0, withdrawal: 0 }
+  );
+
+console.log(deposit, withdrawal);
