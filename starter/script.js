@@ -536,3 +536,14 @@ console.log(y);
 
 //ARRAY METHOD PRACTICS
 //01: FILTERING ALL THE MOVEMENTS FROM THE 4 ACCOUNTS
+const bankDepsitSm = accounts
+  .flatMap(acc => acc.movements)
+  .filter(mov => mov < 0)
+  .reduce((accu, mov) => accu + mov, 0);
+console.log(bankDepsitSm);
+
+//02: getting the lenght of an array
+const depositNum100 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((count, cur) => (cur >= 1000 ? count + 1 : count, 0));
+console.log(depositNum100);
