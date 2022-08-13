@@ -530,3 +530,9 @@ arrr.fill(23, 2, 6);
 console.log(arrr);
 
 //Array.from()
+// the .from() method is use on the Array keyword as a function and not on any element
+const y = Array.from({ length: 7 }, () => 1);
+console.log(y);
+
+//ARRAY METHOD PRACTICS
+//01: FILTERING ALL THE MOVEMENTS FROM THE 4 ACCOUNTS
